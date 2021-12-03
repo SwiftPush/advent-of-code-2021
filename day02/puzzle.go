@@ -1,4 +1,4 @@
-package day00
+package day02
 
 import (
 	"aoc/registry"
