@@ -84,11 +84,7 @@ func part2(lines []Line) int {
 }
 
 func calcOverlaps(lines []Line, includeDiagonalLines bool) int {
-	size := 1000
-	grid := make([][]int, size)
-	for i := 0; i < size; i += 1 {
-		grid[i] = make([]int, size)
-	}
+	pointCount := map[Point]int{}
 
 	for _, line := range lines {
 		xDir := convToDir(line.dst.x - line.src.x)
@@ -102,27 +98,17 @@ func calcOverlaps(lines []Line, includeDiagonalLines bool) int {
 
 		xPos, yPos := line.src.x, line.src.y
 		for (xPos != line.dst.x) || (yPos != line.dst.y) {
-			grid[yPos][xPos] += 1
+			point := Point{x: xPos, y: yPos}
+			pointCount[point] += 1
+
 			xPos += xDir
 			yPos += yDir
 		}
-		grid[yPos][xPos] += 1
+		point := Point{x: xPos, y: yPos}
+		pointCount[point] += 1
 	}
 
-	return countOverlaps(grid)
-}
-
-func printGrid(grid [][]int) {
-	for _, gridLine := range grid {
-		for _, gridCell := range gridLine {
-			if gridCell != 0 {
-				fmt.Printf("%d ", gridCell)
-			} else {
-				fmt.Printf(". ")
-			}
-		}
-		fmt.Println()
-	}
+	return countOverlaps(pointCount)
 }
 
 func convToDir(a int) int {
@@ -134,12 +120,10 @@ func convToDir(a int) int {
 	return 1
 }
 
-func countOverlaps(grid [][]int) (overlaps int) {
-	for _, gridLine := range grid {
-		for _, gridCell := range gridLine {
-			if gridCell > 1 {
-				overlaps += 1
-			}
+func countOverlaps(pointCounts map[Point]int) (overlaps int) {
+	for _, count := range pointCounts {
+		if count > 1 {
+			overlaps += 1
 		}
 	}
 	return overlaps
