@@ -100,22 +100,14 @@ func calcOverlaps(lines []Line, includeDiagonalLines bool) int {
 			}
 		}
 
-		xPos := line.src.x
-		yPos := line.src.y
+		xPos, yPos := line.src.x, line.src.y
 		for (xPos != line.dst.x) || (yPos != line.dst.y) {
 			grid[yPos][xPos] += 1
-
-			if xPos != line.dst.x {
-				xPos += xDir
-			}
-			if yPos != line.dst.y {
-				yPos += yDir
-			}
+			xPos += xDir
+			yPos += yDir
 		}
 		grid[yPos][xPos] += 1
-
 	}
-	//printGrid(grid)
 
 	return countOverlaps(grid)
 }
