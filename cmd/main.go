@@ -12,6 +12,7 @@ import (
 	_ "aoc/day09"
 	_ "aoc/day10"
 	_ "aoc/day12"
+	_ "aoc/day13"
 
 	"aoc/registry"
 
