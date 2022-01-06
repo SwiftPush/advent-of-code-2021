@@ -63,9 +63,9 @@ func process(template string, rules map[string]string, numSteps int) int {
 		pairs = newPairs
 	}
 
-	charCounts := countChars(pairs)
+	letterCounts := countLetters(pairs)
 
-	return getLeastMostDifference(charCounts)
+	return getLeastMostDifference(letterCounts)
 }
 
 func initPairs(template string) map[string]int {
@@ -96,14 +96,14 @@ func getLeastMostDifference(letterCounts map[string]int) int {
 	return mostCommon - leastCommon
 }
 
-func countChars(pairs map[string]int) map[string]int {
-	charCounts := map[string]int{}
+func countLetters(pairs map[string]int) map[string]int {
+	letterCounts := map[string]int{}
 	for pair, count := range pairs {
 		c := string(pair[0])
 		if c == "$" {
 			continue
 		}
-		charCounts[c] += count
+		letterCounts[c] += count
 	}
-	return charCounts
+	return letterCounts
 }
